@@ -1,12 +1,32 @@
 import pandas as pd
-from sklearn.impute import SimpleImputer
 import numpy as np
 
-imputer = SimpleImputer(missing_values=np.nan, strategy="mean")
-dataset = pd.read_csv("/Users/lahzatoz/regression-models/data-preprocessing/Data.csv")
+dataset = pd.read_csv(
+    "/Users/lahzatoz/regression-models/simple-linear-regression/Salary_Data.csv"
+)
 X = dataset.iloc[:, :-1]
 y = dataset.iloc[:, -1]
+from sklearn.model_selection import train_test_split
 
-imputer.fit(X.iloc[:, 1:3])
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-X.iloc[:, 1:3] = imputer.transform(X.iloc[:, 1:3])
+from sklearn.linear_model import LinearRegression
+
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+y_pred = regressor.predict(X_train)
+y_test_pred = regressor.predict(X_test)
+
+import matplotlib.pyplot as plt
+
+plt.scatter(X_train, y_train, color="blue")
+plt.plot(X_train, y_pred, color="black")
+plt.xlabel("Years of Experience")
+plt.ylabel("Salary")
+plt.title("Training graph")
+plt.scatter(X_test, y_test, color="purple")
+plt.plot(X_train, y_pred, color="black")
+plt.xlabel("Years of Experience")
+plt.ylabel("Salary")
+plt.title("Test graph")
+plt.show()
