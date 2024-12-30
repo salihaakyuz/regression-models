@@ -21,14 +21,14 @@ lin_reg.fit(X, y)
 from sklearn.preprocessing import PolynomialFeatures
 
 # create a vector of features from our features that has degree of 2.
-poly_reg = PolynomialFeatures(degree=19)
+poly_reg = PolynomialFeatures(degree=2)
 
 X_poly = poly_reg.fit_transform(X)
 
 # create polynomial regressor from our simple linear regressor by using the feature of polynomial with degree 2.
 lin_reg_sec = LinearRegression()
 poly_lin_reg = lin_reg_sec.fit(X_poly, y)
-
+print(poly_lin_reg.predict(poly_reg.fit_transform([[6.5]])), lin_reg.predict([[6.4]]))
 # create a plot
 plt.scatter(X, y, color="red", label="Actual Data")
 plt.plot(X, lin_reg.predict(X), color="blue", label="Simple Linear Regression")
